@@ -1,7 +1,16 @@
+import { Metadata } from "next";
 import NotFundAbout from "../../not-found";
 interface ProductIdProps {
   params: { ProductId: string };
 }
+
+export const generateMetadata =({params}: ProductIdProps):Metadata=> {
+   return {
+    title : `product ${params.ProductId}`
+   }
+}
+
+
 
 const ProductId = ({ params }: ProductIdProps) => {
   const { ProductId } = params;

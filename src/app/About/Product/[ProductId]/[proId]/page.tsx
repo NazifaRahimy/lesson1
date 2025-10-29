@@ -1,8 +1,14 @@
 import NotFoundNestedId from "./not-found";
-
+import { Metadata } from "next";
 interface ProIdProps {
     params: {ProductId: string; proId: string}
 }
+ export const generateMetadata = ({ params }: ProIdProps): Metadata => {
+  return {
+    title: `Product ${params.ProductId} - Nested ID ${params.proId}`,
+  };
+};
+
 const ProId = ({params}: ProIdProps) => {
     const {ProductId} = params;
     const {proId} = params
