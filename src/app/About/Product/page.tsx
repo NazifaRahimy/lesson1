@@ -1,6 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
 
+export const metadata: Metadata ={
+   title: "Product", 
+     description: "Discover our featured products, specifications, and details.",
+}
 const products = [
   { id: "1", name: "Gol", price: "100 AF", image: "/gol.jpeg", time: "1 day ago" },
   { id: 2, name: "Car", price: "10000 AF", image: "/foldar.jpeg", time: "1 day ago" },
@@ -14,11 +19,11 @@ const Product = () => {
   return (
     <div className="flex min-h-screen flex-col p-10">
       <h1 className="text-3xl font-bold mb-4 text-center">All Products</h1>
-
-      <div className="container bg-gray-100 grid grid-cols-4 gap-5 shadow-md p-4 mt-5">
+       <div className="container bg-gray-100 grid grid-cols-4 gap-5 shadow-md p-4 mt-5">
         {products.map((item) => (
           <Link
-            href={`/product/${item.id}`}
+            // href={`/Product/${item.id}`}
+            href={`/About/Product/${item.id}`}
             key={item.id}
             className="w-auto h-[350px] bg-white p-4 duration-200 transition-all hover:scale-105"
           >

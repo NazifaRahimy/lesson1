@@ -1,3 +1,9 @@
+import { Metadata } from "next"
+export const metadata: Metadata = {
+  title: "Login",
+    description: "Access your account by logging in with your credentials.",
+};
+
 export default function Login (){
     return (
          <div className="flex min-h-screen  flex-col p-10">
