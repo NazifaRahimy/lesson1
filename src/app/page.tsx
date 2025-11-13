@@ -13,11 +13,33 @@
 //   );
 // }
 // app/page.tsx  یا app/home/page.tsx
-export default async function HomePage() {
-  const res = await fetch("http://localhost:3000/api/contact", {
-    cache: "no-store", // تا همیشه جدیدترین داده بیاید
-  });
-  const contacts = await res.json();
+
+"use client";
+import { useState, useEffect } from "react";
+import DeleteButton from "@/component/DeleteButton";
+
+export default function HomePage() {
+  const [contacts, setContacts] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchContacts();
+  }, []);
+
+  const fetchContacts = async () => {
+    const res = await fetch("/api/contact");
+    const data = await res.json();
+    setContacts(data);
+  };
+
+  const handleDelete = async (id: string) => {
+    await fetch("/api/contact", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+
+    setContacts((prev) => prev.filter((msg) => msg.id !== id));
+  };
 
   return (
     <div className="p-6">
@@ -27,11 +49,14 @@ export default async function HomePage() {
         <p>No messages found.</p>
       ) : (
         <ul className="space-y-2">
-          {contacts.map((item: any) => (
-            <li key={item.id} className="border p-3 rounded">
-              <p><strong>Name:</strong> {item.name}</p>
-              <p><strong>Email:</strong> {item.email}</p>
-              <p><strong>Message:</strong> {item.message}</p>
+          {contacts.map((item) => (
+            <li key={item.id} className="border p-3 rounded flex justify-between items-start">
+              <div>
+                <p><strong>Name:</strong> {item.name}</p>
+                <p><strong>Email:</strong> {item.email}</p>
+                <p><strong>Message:</strong> {item.message}</p>
+              </div>
+              <DeleteButton id={item.id} onDelete={handleDelete} />
             </li>
           ))}
         </ul>
@@ -39,3 +64,4 @@ export default async function HomePage() {
     </div>
   );
 }
+
